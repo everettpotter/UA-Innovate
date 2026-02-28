@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "PNC Mobile Banking",
+    "slug": "pnc-banking-prototype",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "pnc",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#414e58"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pnc.prototype"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#414e58"
+      },
+      "package": "com.pnc.prototype"
+    },
+    "plugins": ["expo-router"]
+  }
+}
