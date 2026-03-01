@@ -22,7 +22,6 @@ import {
 } from '../data/goalsData';
 import { getFinancialContextForGoals } from '../data/financialEngine';
 
-const PNC_NAVY = '#003087';
 const PNC_ORANGE = '#EF7622';
 const LIGHT_BG = '#F4F6F9';
 
@@ -58,7 +57,7 @@ function GoalCard({
     <View style={styles.goalCard}>
       <View style={styles.goalHeader}>
         <View style={styles.goalTitleRow}>
-          <Ionicons name={iconName} size={22} color={PNC_NAVY} style={styles.goalIcon} />
+          <Ionicons name={iconName} size={22} color={PNC_ORANGE} style={styles.goalIcon} />
           <Text style={styles.goalName}>{goal.name}</Text>
         </View>
         <TouchableOpacity
@@ -93,7 +92,7 @@ function GoalCard({
 
       {goal.targetDate && timeline.daysRemaining != null && (
         <View style={styles.timelineBox}>
-          <Ionicons name="calendar-outline" size={14} color={PNC_NAVY} />
+          <Ionicons name="calendar-outline" size={14} color={PNC_ORANGE} />
           <Text style={styles.timelineText}>
             Target: {formatDate(goal.targetDate)} · {timeline.daysRemaining} days left
           </Text>
@@ -101,7 +100,7 @@ function GoalCard({
       )}
       {timeline.monthlyRequired != null && timeline.monthlyRequired > 0 && (
         <View style={styles.timelineBox}>
-          <Ionicons name="trending-up-outline" size={14} color={PNC_NAVY} />
+          <Ionicons name="trending-up-outline" size={14} color={PNC_ORANGE} />
           <Text style={styles.timelineText}>
             Save {formatCurrency(timeline.monthlyRequired)}/mo to stay on track
           </Text>
@@ -126,7 +125,7 @@ function GoalCard({
         <Ionicons
           name={showSuggestions ? 'chevron-up' : 'chevron-down'}
           size={18}
-          color={PNC_NAVY}
+          color={PNC_ORANGE}
         />
       </TouchableOpacity>
 
@@ -352,7 +351,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: PNC_NAVY,
+    backgroundColor: PNC_ORANGE,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 8,
@@ -398,7 +397,7 @@ const styles = StyleSheet.create({
   goalName: { fontSize: 16, fontWeight: '700', color: '#222', flex: 1 },
   amountRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 },
   currentLabel: { fontSize: 12, color: '#888' },
-  amountText: { fontSize: 15, fontWeight: '700', color: PNC_NAVY },
+  amountText: { fontSize: 15, fontWeight: '700', color: PNC_ORANGE },
   progressTrack: {
     height: 8,
     backgroundColor: '#E8ECF0',
@@ -434,7 +433,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#eee',
   },
-  suggestionsToggleText: { fontSize: 13, fontWeight: '600', color: PNC_NAVY },
+  suggestionsToggleText: { fontSize: 13, fontWeight: '600', color: PNC_ORANGE },
   suggestionsList: { marginTop: 8 },
   suggestionRow: { flexDirection: 'row', marginBottom: 10 },
   suggestionIcon: { marginRight: 8, marginTop: 2 },
@@ -469,7 +468,7 @@ const styles = StyleSheet.create({
   },
   inputHint: { fontSize: 11, color: '#888', marginTop: -10, marginBottom: 16 },
   addButton: {
-    backgroundColor: PNC_NAVY,
+    backgroundColor: PNC_ORANGE,
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',

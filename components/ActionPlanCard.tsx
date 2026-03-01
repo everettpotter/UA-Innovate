@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { generateActionPlan, type Action, type ActionPriority } from '../data/financialEngine';
 
-const PNC_NAVY = '#003087';
+const PNC_ORANGE = '#EF7622';
 
 const PRIORITY_CONFIG: Record<ActionPriority, { color: string; label: string }> = {
   high:   { color: '#C62828', label: 'Do this now' },
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   cardLabel: {
     fontSize: 16,
     fontWeight: '800',
-    color: PNC_NAVY,
+    color: PNC_ORANGE,
   },
   cardSubtitle: {
     fontSize: 12,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: PNC_NAVY,
+    backgroundColor: PNC_ORANGE,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   countBadgeLabel: {
-    color: '#A8C8E8',
+    color: 'rgba(255,255,255,0.9)',
     fontSize: 9,
     fontWeight: '600',
   },
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   ctaBtn: {
     alignSelf: 'flex-start',
-    backgroundColor: PNC_NAVY,
+    backgroundColor: PNC_ORANGE,
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 8,

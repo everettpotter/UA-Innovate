@@ -8,8 +8,10 @@ import ActionPlanCard from '../../components/ActionPlanCard';
 import ChallengesView from '../../components/ChallengesView';
 import GoalsView from '../../components/GoalsView';
 import { ForecastContent } from './future-forecast';
+import { colors } from '../../constants/theme';
 
-const PNC_NAVY = '#003087';
+const PNC_ORANGE = '#EF7622';
+const GREY_BG = '#F4F6F9';
 
 type Section = 'insights' | 'challenges' | 'forecast' | 'goals';
 
@@ -28,7 +30,7 @@ export default function CompassScreen() {
       {/* Navbar */}
       <View style={styles.navbar}>
         <View style={styles.navRow}>
-          <Ionicons name="compass-outline" size={20} color="#A8C8E8" />
+          <Ionicons name="compass-outline" size={20} color={PNC_ORANGE} />
           <Text style={styles.navTitle}>PNC Compass</Text>
         </View>
         <Text style={styles.navSubtitle}>Your financial navigation center</Text>
@@ -65,13 +67,13 @@ export default function CompassScreen() {
           contentContainerStyle={styles.insightsScroll}
         >
           <ConfidenceScoreCard />
-          <SafeToSpendWidget />
+          <SafeToSpendWidget theme="compass" />
           <ActionPlanCard />
           <View style={{ height: 24 }} />
         </ScrollView>
       )}
 
-      {section === 'challenges' && <ChallengesView />}
+      {section === 'challenges' && <ChallengesView theme="compass" />}
 
       {section === 'forecast' && <ForecastContent />}
 
@@ -83,10 +85,10 @@ export default function CompassScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4F6F9',
+    backgroundColor: GREY_BG,
   },
   navbar: {
-    backgroundColor: PNC_NAVY,
+    backgroundColor: colors.navBg,
     paddingHorizontal: 16,
     paddingVertical: 14,
   },
@@ -96,12 +98,12 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   navTitle: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 20,
     fontWeight: '800',
   },
   navSubtitle: {
-    color: '#A8C8E8',
+    color: '#b0bec5',
     fontSize: 12,
     marginTop: 3,
   },
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F2F5',
   },
   segmentActive: {
-    backgroundColor: PNC_NAVY,
+    backgroundColor: PNC_ORANGE,
   },
   segmentText: {
     fontSize: 12,

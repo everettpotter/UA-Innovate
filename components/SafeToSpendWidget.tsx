@@ -5,7 +5,10 @@ import { calculateSafeToSpend } from '../data/financialEngine';
 const PNC_ORANGE = '#EF7622';
 const PNC_NAVY = '#003087';
 
-export default function SafeToSpendWidget() {
+type Theme = 'default' | 'compass';
+
+export default function SafeToSpendWidget({ theme = 'default' }: { theme?: Theme }) {
+  const accent = theme === 'compass' ? PNC_ORANGE : PNC_NAVY;
   const [view, setView] = useState<'daily' | 'weekly'>('daily');
   const result = calculateSafeToSpend();
 
@@ -23,7 +26,7 @@ export default function SafeToSpendWidget() {
         <Text style={styles.cardLabel}>Safe to Spend</Text>
         <View style={styles.toggle}>
           <TouchableOpacity
-            style={[styles.toggleBtn, view === 'daily' && styles.toggleBtnActive]}
+            style={[styles.toggleBtn, view === 'daily' && [styles.toggleBtnActive, { backgroundColor: accent }]]}
             onPress={() => setView('daily')}
           >
             <Text style={[styles.toggleText, view === 'daily' && styles.toggleTextActive]}>
@@ -31,7 +34,7 @@ export default function SafeToSpendWidget() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.toggleBtn, view === 'weekly' && styles.toggleBtnActive]}
+            style={[styles.toggleBtn, view === 'weekly' && [styles.toggleBtnActive, { backgroundColor: accent }]]}
             onPress={() => setView('weekly')}
           >
             <Text style={[styles.toggleText, view === 'weekly' && styles.toggleTextActive]}>

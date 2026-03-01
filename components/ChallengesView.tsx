@@ -33,28 +33,42 @@ const TIER_COLORS: Record<string, string> = {
   Diamond:  '#7C4DFF',
 };
 
+const TIER_COLORS_COMPASS = { ...TIER_COLORS, Platinum: '#607D8B' };
+
+type Theme = 'default' | 'compass';
+
 // ─── Rank Card ───────────────────────────────────────────────────────────────
 
-function RankCard({ xp }: { xp: number }) {
+function RankCard({
+  xp,
+  theme = 'default',
+}: {
+  xp: number;
+  theme?: Theme;
+}) {
   const tier = getTier(xp);
   const nextTier = getNextTier(xp);
   const progress = nextTier
     ? ((xp - tier.minXP) / (nextTier.minXP - tier.minXP)) * 100
     : 100;
+  const tierColors = theme === 'compass' ? TIER_COLORS_COMPASS : TIER_COLORS;
+  const tierColor = tierColors[tier.name] ?? tier.color;
+  const accent = theme === 'compass' ? PNC_ORANGE : PNC_NAVY;
+  const mutedLabel = theme === 'compass' ? '#888' : '#A8C8E8';
 
   return (
-    <View style={[styles.rankCard, { borderTopColor: tier.color }]}>
+    <View style={[styles.rankCard, { borderTopColor: tierColor }]}>
       <View style={styles.rankTop}>
         <View>
           <Text style={styles.rankGreeting}>Your Rank</Text>
           <View style={styles.rankTierRow}>
-            <Ionicons name={tier.badge as any} size={24} color={tier.color} />
-            <Text style={[styles.rankTierName, { color: tier.color }]}>{tier.name}</Text>
+            <Ionicons name={tier.badge as any} size={24} color={tierColor} />
+            <Text style={[styles.rankTierName, { color: tierColor }]}>{tier.name}</Text>
           </View>
         </View>
-        <View style={styles.rankXPBox}>
+        <View style={[styles.rankXPBox, { backgroundColor: accent }]}>
           <Text style={styles.rankXPNum}>{xp}</Text>
-          <Text style={styles.rankXPLabel}>XP</Text>
+          <Text style={[styles.rankXPLabel, { color: mutedLabel }]}>XP</Text>
         </View>
       </View>
 
@@ -70,7 +84,7 @@ function RankCard({ xp }: { xp: number }) {
             <View
               style={[
                 styles.progressFill,
-                { width: `${progress}%`, backgroundColor: tier.color },
+                { width: `${progress}%`, backgroundColor: tierColor },
               ]}
             />
           </View>
@@ -86,10 +100,12 @@ function ChallengeCard({
   challenge,
   onComplete,
   onStart,
+  accent = PNC_NAVY,
 }: {
   challenge: Challenge;
   onComplete: (id: string) => void;
   onStart: (id: string) => void;
+  accent?: string;
 }) {
   const cfg = STATUS_CONFIG[challenge.status];
 
@@ -129,7 +145,7 @@ function ChallengeCard({
               <View
                 style={[
                   styles.progressFill,
-                  { width: `${challenge.progress}%`, backgroundColor: PNC_NAVY },
+                  { width: `${challenge.progress}%`, backgroundColor: accent },
                 ]}
               />
             </View>
@@ -147,7 +163,7 @@ function ChallengeCard({
 
       {challenge.status === 'available' && (
         <TouchableOpacity
-          style={styles.startBtn}
+          style={[styles.startBtn, { backgroundColor: accent }]}
           onPress={() => onStart(challenge.id)}
         >
           <Text style={styles.startBtnText}>Start Challenge</Text>
@@ -159,14 +175,22 @@ function ChallengeCard({
 
 // ─── Leaderboard Row ─────────────────────────────────────────────────────────
 
-function LeaderboardRow({ entry }: { entry: (typeof LEADERBOARD)[0] }) {
-  const tierColor = TIER_COLORS[entry.tierName] ?? '#888';
+function LeaderboardRow({
+  entry,
+  theme = 'default',
+}: {
+  entry: (typeof LEADERBOARD)[0];
+  theme?: Theme;
+}) {
+  const tierColors = theme === 'compass' ? TIER_COLORS_COMPASS : TIER_COLORS;
+  const tierColor = tierColors[entry.tierName] ?? '#888';
+  const accent = theme === 'compass' ? PNC_ORANGE : PNC_NAVY;
   const isUser = entry.isCurrentUser;
   const initial = entry.name.charAt(0).toUpperCase();
   const displayName = isUser ? entry.name : entry.name.charAt(0) + '•••••';
 
   return (
-    <View style={[styles.lbRow, isUser && styles.lbRowHighlight]}>
+    <View style={[styles.lbRow, isUser && (theme === 'compass' ? { backgroundColor: '#FFF8F3' } : styles.lbRowHighlight)]}>
       {entry.rank <= 3 ? (
         <Ionicons
           name="trophy-outline"
@@ -181,21 +205,22 @@ function LeaderboardRow({ entry }: { entry: (typeof LEADERBOARD)[0] }) {
         <Text style={styles.lbAvatarText}>{initial}</Text>
       </View>
       <View style={styles.lbInfo}>
-        <Text style={[styles.lbName, isUser && styles.lbNameHighlight]}>
+        <Text style={[styles.lbName, isUser && [styles.lbNameHighlight, { color: accent }]]}>
           {displayName}{isUser ? ' (You)' : ''}
         </Text>
         <Text style={[styles.lbTier, { color: tierColor }]}>{entry.tierName}</Text>
       </View>
-      <Text style={[styles.lbXP, isUser && styles.lbXPHighlight]}>{entry.xp} XP</Text>
+      <Text style={[styles.lbXP, isUser && [styles.lbXPHighlight, { color: accent }]]}>{entry.xp} XP</Text>
     </View>
   );
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function ChallengesView() {
+export default function ChallengesView({ theme = 'default' }: { theme?: Theme }) {
   const [challenges, setChallenges] = useState<Challenge[]>(INITIAL_CHALLENGES);
   const [xp, setXP] = useState(150);
+  const accent = theme === 'compass' ? PNC_ORANGE : PNC_NAVY;
 
   const completed = challenges.filter((c) => c.status === 'completed');
   const active = challenges.filter((c) => c.status === 'active');
@@ -226,7 +251,7 @@ export default function ChallengesView() {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-      <RankCard xp={xp} />
+      <RankCard xp={xp} theme={theme} />
 
       {active.length > 0 && (
         <>
@@ -237,6 +262,7 @@ export default function ChallengesView() {
               challenge={c}
               onComplete={handleComplete}
               onStart={handleStart}
+              accent={accent}
             />
           ))}
         </>
@@ -251,6 +277,7 @@ export default function ChallengesView() {
               challenge={c}
               onComplete={handleComplete}
               onStart={handleStart}
+              accent={accent}
             />
           ))}
         </>
@@ -268,6 +295,7 @@ export default function ChallengesView() {
               challenge={c}
               onComplete={handleComplete}
               onStart={handleStart}
+              accent={accent}
             />
           ))}
         </>
@@ -276,7 +304,7 @@ export default function ChallengesView() {
       <Text style={styles.sectionTitle}>Leaderboard</Text>
       <View style={styles.leaderboardCard}>
         {leaderboard.map((entry) => (
-          <LeaderboardRow key={entry.rank} entry={entry} />
+          <LeaderboardRow key={entry.rank} entry={entry} theme={theme} />
         ))}
       </View>
 
