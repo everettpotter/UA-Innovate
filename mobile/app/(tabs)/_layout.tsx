@@ -1,21 +1,15 @@
 import { Tabs } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors } from '@/constants/theme';
 
-const ForecastArrowIcon = require('@/assets/icon-forecast-arrow.svg').default;
+const PNC_ORANGE = '#EF7622';
+const PNC_NAVY = '#003087';
 
-function TabIcon({ label, active, color }: { label: string; active: boolean; color?: string }) {
-  if (label === 'Spending Forecast') {
-    return (
-      <View style={tabStyles.container}>
-        <ForecastArrowIcon width={22} height={22} color={color ?? (active ? colors.primary : '#888')} />
-      </View>
-    );
-  }
+function TabIcon({ label, active }: { label: string; active: boolean }) {
   const icons: Record<string, string> = {
     Home: '⌂',
+    Accounts: '₿',
     Transactions: '≡',
-    Challenges: '🏆',
+    More: '•••',
   };
   return (
     <View style={tabStyles.container}>
@@ -29,7 +23,7 @@ function TabIcon({ label, active, color }: { label: string; active: boolean; col
 const tabStyles = StyleSheet.create({
   container: { alignItems: 'center' },
   icon: { fontSize: 20, color: '#888' },
-  activeIcon: { color: colors.primary },
+  activeIcon: { color: PNC_ORANGE },
 });
 
 export default function TabsLayout() {
@@ -37,11 +31,11 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveTintColor: PNC_ORANGE,
         tabBarInactiveTintColor: '#888',
         tabBarStyle: {
-          backgroundColor: colors.white,
-          borderTopColor: colors.border,
+          backgroundColor: '#fff',
+          borderTopColor: '#E0E0E0',
           borderTopWidth: 1,
           height: 64,
           paddingBottom: 10,
@@ -61,18 +55,6 @@ export default function TabsLayout() {
         options={{
           title: 'Transactions',
           tabBarIcon: ({ focused }) => <TabIcon label="Transactions" active={focused} />,
-        }}
-      />
-      <Tabs.Screen
-        name="challenges"
-        options={{
-          title: 'Challenges',
-          tabBarIcon: ({ focused }) => <TabIcon label="Challenges" active={focused} />,
-        name="future-forecast"
-        options={{
-          title: 'Spending Forecast',
-          tabBarIcon: ({ focused, color }) => <TabIcon label="Spending Forecast" active={focused} color={color} />,
-          tabBarLabelStyle: { fontSize: 10, fontWeight: '600' },
         }}
       />
     </Tabs>
