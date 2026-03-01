@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { calculateConfidenceScore, type ScoreBreakdown } from '@/app/data/financialEngine';
 
-const PNC_NAVY = '#003087';
-
 function FactorBar({ item }: { item: ScoreBreakdown }) {
   const barColor =
     item.score >= 70 ? '#2E7D32' : item.score >= 45 ? '#EF7622' : '#C62828';

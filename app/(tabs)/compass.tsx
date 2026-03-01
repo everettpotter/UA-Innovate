@@ -7,8 +7,7 @@ import SafeToSpendWidget from '@/components/SafeToSpendWidget';
 import ActionPlanCard from '@/components/ActionPlanCard';
 import ChallengesView from '@/components/ChallengesView';
 import { ForecastContent } from './future-forecast';
-
-const PNC_NAVY = '#003087';
+import { colors } from '@/constants/theme';
 
 type Section = 'insights' | 'challenges' | 'forecast';
 
@@ -26,7 +25,7 @@ export default function CompassScreen() {
       {/* Navbar */}
       <View style={styles.navbar}>
         <View style={styles.navRow}>
-          <Ionicons name="compass-outline" size={20} color="#A8C8E8" />
+          <Ionicons name="compass-outline" size={20} color={colors.primary} />
           <Text style={styles.navTitle}>PNC Compass</Text>
         </View>
         <Text style={styles.navSubtitle}>Your financial navigation center</Text>
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F6F9',
   },
   navbar: {
-    backgroundColor: PNC_NAVY,
+    backgroundColor: colors.navBg,
     paddingHorizontal: 16,
     paddingVertical: 14,
   },
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   navSubtitle: {
-    color: '#A8C8E8',
+    color: '#b0bec5',
     fontSize: 12,
     marginTop: 3,
   },
@@ -126,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F2F5',
   },
   segmentActive: {
-    backgroundColor: PNC_NAVY,
+    backgroundColor: colors.primary,
   },
   segmentText: {
     fontSize: 12,
