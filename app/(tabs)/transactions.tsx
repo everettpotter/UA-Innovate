@@ -39,7 +39,7 @@ function formatDate(dateStr: string) {
 
 // ─── constants ───────────────────────────────────────────────────────────────
 
-const CATEGORIES = ['All', 'Groceries', 'Food & Dining', 'Shopping', 'Subscriptions', 'Gas', 'Income', 'Transfer', 'Interest'];
+const CATEGORIES = ['All', 'Food & Dining', 'Subscriptions', 'Shopping', 'Rent', 'Fees', 'Income', 'Transfer', 'Gas', 'Groceries', 'Interest'];
 
 const CATEGORY_COLORS: Record<SubscriptionCategory, string> = {
   Streaming: '#0069aa',
