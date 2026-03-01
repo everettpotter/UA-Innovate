@@ -68,6 +68,9 @@ export default function TabsLayout() {
         options={{
           title: 'Challenges',
           tabBarIcon: ({ focused }) => <TabIcon label="Challenges" active={focused} />,
+        }}
+      />
+      <Tabs.Screen
         name="future-forecast"
         options={{
           title: 'Spending Forecast',
