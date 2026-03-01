@@ -225,7 +225,12 @@ export default function AiChatbot() {
                   <Ionicons name="sparkles" size={15} color="#fff" />
                 </View>
                 <View>
-                  <Text style={styles.headerTitle}>PNC AI Advisor</Text>
+                  <View style={styles.titleRow}>
+                    <Text style={styles.headerTitle}>PNC AI Advisor</Text>
+                      <View style={styles.betaBadge}>
+                    <Text style={styles.betaText}>ALPHA</Text>
+                  </View>
+                </View>
                   <Text style={styles.headerSub}>Powered by Claude</Text>
                 </View>
               </View>
@@ -310,6 +315,25 @@ export default function AiChatbot() {
 }
 
 const styles = StyleSheet.create({
+  titleRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,
+},
+
+betaBadge: {
+  backgroundColor: '#ffffff20',
+  paddingHorizontal: 6,
+  paddingVertical: 2,
+  borderRadius: 6,
+},
+
+betaText: {
+  fontSize: 9,
+  fontWeight: '700',
+  color: '#fff',
+  letterSpacing: 0.5,
+},
   container: {
   position: 'absolute',
   bottom: 100,
