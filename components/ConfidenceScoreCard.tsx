@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { calculateConfidenceScore, type ScoreBreakdown } from '@/app/data/financialEngine';
+import { calculateConfidenceScore, type ScoreBreakdown } from '../data/financialEngine';
 
 type Props = {
   aiInsight?: string;

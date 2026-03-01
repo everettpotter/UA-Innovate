@@ -2,21 +2,23 @@ import { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import ConfidenceScoreCard from '@/components/ConfidenceScoreCard';
-import SafeToSpendWidget from '@/components/SafeToSpendWidget';
-import ActionPlanCard from '@/components/ActionPlanCard';
-import ChallengesView from '@/components/ChallengesView';
+import ConfidenceScoreCard from '../../components/ConfidenceScoreCard';
+import SafeToSpendWidget from '../../components/SafeToSpendWidget';
+import ActionPlanCard from '../../components/ActionPlanCard';
+import ChallengesView from '../../components/ChallengesView';
+import GoalsView from '../../components/GoalsView';
 import { ForecastContent } from './future-forecast';
 import { colors } from '@/constants/theme';
 import { generateAIInsight } from '@/app/data/aiService';
 import { GEMINI_API_KEY } from '@/constants/aiConfig';
 
-type Section = 'insights' | 'challenges' | 'forecast';
+type Section = 'insights' | 'challenges' | 'forecast' | 'goals';
 
 const SECTIONS: { id: Section; label: string; icon: string }[] = [
   { id: 'insights',   label: 'Insights',    icon: 'pulse-outline' },
   { id: 'challenges', label: 'Challenges',  icon: 'trophy-outline' },
   { id: 'forecast',   label: 'Forecast',    icon: 'trending-up-outline' },
+  { id: 'goals',      label: 'Goals',       icon: 'flag-outline' },
 ];
 
 export default function CompassScreen() {
@@ -83,6 +85,8 @@ export default function CompassScreen() {
       {section === 'challenges' && <ChallengesView />}
 
       {section === 'forecast' && <ForecastContent />}
+
+      {section === 'goals' && <GoalsView />}
     </SafeAreaView>
   );
 }
