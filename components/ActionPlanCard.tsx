@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { generateActionPlan, type Action, type ActionPriority } from '@/app/data/financialEngine';
 
@@ -11,51 +11,13 @@ const PRIORITY_CONFIG: Record<ActionPriority, { color: string; label: string }> 
   low:    { color: '#2E7D32', label: 'When ready' },
 };
 
-const ACTION_STEPS: Record<string, { title: string; steps: string }> = {
-  'spending-high': {
-    title: 'Reduce Spending',
-    steps: '1. Review your transactions this month\n2. Identify your top 3 non-essential categories\n3. Set a weekly cash limit for discretionary spending\n4. Check back next week to see your progress',
-  },
-  'credit-high': {
-    title: 'Pay Down Credit Card',
-    steps: '1. Go to Accounts → Cash Rewards Visa\n2. Tap "Pay Now" and pay more than the minimum\n3. Target paying the balance down to under 30% of your limit\n4. Set up autopay to avoid interest charges',
-  },
-  'savings-low': {
-    title: 'Build Emergency Fund',
-    steps: '1. Open your Growth Savings account\n2. Set up a recurring weekly transfer of $50+\n3. Treat it like a bill — non-negotiable\n4. Goal: 3 months of expenses (~$1,100)',
-  },
-  'subscriptions': {
-    title: 'Audit Subscriptions',
-    steps: '1. Go to Transactions → filter by "Subscriptions"\n2. List every recurring charge\n3. Ask yourself: did I use this in the last 30 days?\n4. Cancel any you haven\'t used — you can always resubscribe',
-  },
-  'dining': {
-    title: 'Cut Dining Costs',
-    steps: '1. Meal prep on Sundays to reduce weekday temptation\n2. Set a $40/week dining budget\n3. Cook at home at least 4 nights this week\n4. Use your Safe-to-Spend amount before ordering out',
-  },
-  'invest': {
-    title: 'Start Investing',
-    steps: '1. Open a brokerage or Roth IRA account\n2. Start with a low-cost index fund (e.g. VTI or FXAIX)\n3. Contribute even $25/mo to start — compounding takes time\n4. Increase contributions by 1% each year',
-  },
-  'automate': {
-    title: 'Automate Savings',
-    steps: '1. Go to Transfers → Scheduled Transfers\n2. Set up a $50 weekly transfer to Growth Savings\n3. Schedule it for the day after your paycheck arrives\n4. Increase by $10 every 3 months',
-  },
-};
-
 function ActionItem({ action, isLast }: { action: Action; isLast: boolean }) {
   const [expanded, setExpanded] = useState(false);
   const cfg = PRIORITY_CONFIG[action.priority];
   const router = useRouter();
 
   function handleTakeAction() {
-    const config = ACTION_STEPS[action.id];
-    if (action.id === 'subscriptions') {
-      router.push('/(tabs)/transactions');
-      return;
-    }
-    if (config) {
-      Alert.alert(config.title, config.steps, [{ text: 'Got it', style: 'default' }]);
-    }
+    router.push(`/action/${action.id}`);
   }
 
   return (
