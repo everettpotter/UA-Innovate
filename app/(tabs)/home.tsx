@@ -10,12 +10,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { MOCK_USER, MOCK_ACCOUNTS, MOCK_TRANSACTIONS, MOCK_SUBSCRIPTIONS } from '../data/mockData';
+import { MOCK_USER, MOCK_ACCOUNTS, MOCK_TRANSACTIONS } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { colors, spacing, typography } from '@/constants/theme';
-import ConfidenceScoreCard from '@/components/ConfidenceScoreCard';
-import SafeToSpendWidget from '@/components/SafeToSpendWidget';
-import ActionPlanCard from '@/components/ActionPlanCard';
 import TransferModal from '@/components/TransferModal';
 import PayBillsModal from '@/components/PayBillsModal';
 import DepositModal from '@/components/DepositModal';
@@ -50,9 +47,6 @@ export default function HomeScreen() {
 
   const recentTransactions = MOCK_TRANSACTIONS.filter((t) => t.accountId === '1').slice(0, 4);
 
-  const monthlySubTotal = MOCK_SUBSCRIPTIONS.reduce((sum, s) => sum + s.amount, 0);
-  const topSubs = [...MOCK_SUBSCRIPTIONS].sort((a, b) => b.amount - a.amount).slice(0, 3);
-
   function handleLogout() {
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       { text: 'Cancel', style: 'cancel' },
@@ -78,33 +72,6 @@ export default function HomeScreen() {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-        {/* Financial Pulse Section */}
-        <View style={styles.pulseBanner}>
-          <View>
-            <View style={styles.pulseTitleRow}>
-              <Ionicons name="pulse-outline" size={16} color="#fff" />
-              <Text style={styles.pulseTitle}>Financial Pulse</Text>
-            </View>
-            <Text style={styles.pulseSubtitle}>AI-powered insights just for you</Text>
-          </View>
-          <View style={styles.pulseBadge}>
-            <Text style={styles.pulseBadgeText}>SMART</Text>
-          </View>
-        </View>
-        <ConfidenceScoreCard />
-        <SafeToSpendWidget />
-        <ActionPlanCard />
-        <TouchableOpacity
-          style={styles.alertBanner}
-          activeOpacity={0.8}
-          onPress={() => router.push('/(tabs)/transactions')}
-        >
-          <Text style={styles.alertText}>
-            Subscription Radar: {MOCK_SUBSCRIPTIONS.length} active subscriptions — ${monthlySubTotal.toFixed(2)}/mo
-          </Text>
-          <Text style={styles.alertLink}>View →</Text>
-        </TouchableOpacity>
-
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>My Accounts</Text>
           <TouchableOpacity onPress={() => setBalancesHidden((v) => !v)}>
@@ -189,38 +156,6 @@ export default function HomeScreen() {
           </View>
         ))}
 
-        {/* Subscription Radar mini-widget */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Subscription Radar</Text>
-          <TouchableOpacity onPress={() => router.push('/(tabs)/transactions')}>
-            <Text style={styles.actionLink}>View All</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.radarCard}>
-          <View style={styles.radarCardTop}>
-            <View>
-              <Text style={styles.radarTotal}>${monthlySubTotal.toFixed(2)}</Text>
-              <Text style={styles.radarTotalLabel}>monthly subscriptions</Text>
-            </View>
-            <View style={styles.radarCountBadge}>
-              <Text style={styles.radarCountText}>{MOCK_SUBSCRIPTIONS.length} active</Text>
-            </View>
-          </View>
-          {topSubs.map((sub) => (
-            <View key={sub.id} style={styles.radarSubRow}>
-              <Ionicons name={sub.icon as any} size={16} color={colors.navBg} />
-              <Text style={styles.radarSubName}>{sub.name}</Text>
-              <Text style={styles.radarSubAmt}>-${sub.amount.toFixed(2)}/mo</Text>
-            </View>
-          ))}
-          <TouchableOpacity
-            style={styles.radarViewAllBtn}
-            onPress={() => router.push('/(tabs)/transactions')}
-          >
-            <Text style={styles.radarViewAllText}>See all subscriptions & insights →</Text>
-          </TouchableOpacity>
-        </View>
-
         <View style={{ height: spacing.lg }} />
       </ScrollView>
 
@@ -233,44 +168,6 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  pulseBanner: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#003087',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginBottom: 12,
-  },
-  pulseTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  pulseTitle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: 0.5,
-  },
-  pulseSubtitle: {
-    color: '#A8C8E8',
-    fontSize: 12,
-    marginTop: 2,
-  },
-  pulseBadge: {
-    backgroundColor: colors.primary,
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  pulseBadgeText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 1,
-  },
   container: { flex: 1, backgroundColor: colors.gray },
   navbar: {
     backgroundColor: colors.navBg,
@@ -283,19 +180,6 @@ const styles = StyleSheet.create({
   signOutBtn: { paddingHorizontal: 10, paddingVertical: 6 },
   signOutText: { color: '#b0bec5', fontSize: 13, fontWeight: '600' },
   scroll: { paddingHorizontal: spacing.md, paddingTop: spacing.md },
-  alertBanner: {
-    backgroundColor: '#e8f0f7',
-    borderLeftWidth: 4,
-    borderLeftColor: colors.navBg,
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  alertText: { color: colors.navBg, fontSize: 13, fontWeight: '500', flex: 1 },
-  alertLink: { color: colors.link, fontSize: 13, fontWeight: '700', marginLeft: 8 },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -385,45 +269,4 @@ const styles = StyleSheet.create({
   txAmount: { fontSize: 15, fontWeight: '700', color: '#c62828' },
   positiveAmount: { color: '#2e7d32' },
 
-  radarCard: {
-    backgroundColor: colors.white,
-    borderRadius: 14,
-    padding: spacing.md,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  radarCardTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  radarTotal: { fontSize: 22, fontWeight: '800', color: colors.text },
-  radarTotalLabel: { color: colors.textMuted, fontSize: 12, marginTop: 2 },
-  radarCountBadge: {
-    backgroundColor: colors.navBg + '18',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 20,
-  },
-  radarCountText: { color: colors.navBg, fontWeight: '700', fontSize: 12 },
-  radarSubRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    gap: 10,
-  },
-  radarSubName: { flex: 1, fontWeight: '500', color: colors.text, fontSize: 13 },
-  radarSubAmt: { fontWeight: '700', color: '#c62828', fontSize: 13 },
-  radarViewAllBtn: {
-    marginTop: 10,
-    alignSelf: 'center',
-  },
-  radarViewAllText: { color: colors.link, fontSize: 13, fontWeight: '600' },
 });

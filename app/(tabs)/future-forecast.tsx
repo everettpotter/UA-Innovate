@@ -381,7 +381,7 @@ function labelColor(label: MonthRiskLabel): string {
   }
 }
 
-export default function FutureForecastScreen() {
+export function ForecastContent() {
   const result = useMemo(() => {
     const totalBalance = MOCK_ACCOUNTS.reduce((sum, a) => sum + (a.balance ?? 0), 0);
     const credit = MOCK_ACCOUNTS.find((a) => a.type === 'Credit');
@@ -405,12 +405,7 @@ export default function FutureForecastScreen() {
     result.balanceDistributionsByPeriod?.find((d) => d.monthIndex === distributionPeriodMonths) ?? null;
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Spending Forecast</Text>
-      </View>
-
-      <ScrollView
+    <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -694,6 +689,16 @@ export default function FutureForecastScreen() {
           <Text style={styles.footerText}>Not financial advice.</Text>
         </View>
       </ScrollView>
+  );
+}
+
+export default function FutureForecastScreen() {
+  return (
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Spending Forecast</Text>
+      </View>
+      <ForecastContent />
     </SafeAreaView>
   );
 }
