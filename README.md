@@ -2,7 +2,7 @@
 
 > **Honorable Mention – UA Innovate 2026, FinTech Track**
 
-A full-stack mobile banking prototype built in 48 hours at UA Innovate 2026, competing in the FinTech track. The prompt: **improve financial literacy for young adults in an innovative way.**
+A full-stack mobile banking prototype built in 24 hours at UA Innovate 2026, competing in the FinTech track. The prompt: **improve financial literacy for young adults in an innovative way.**
 
 We built a feature-rich React Native app that goes far beyond a standard banking UI — layering in probabilistic forecasting, AI-powered guidance, gamification, and behavioral spending analysis to help users actually understand and improve their financial health.
 
